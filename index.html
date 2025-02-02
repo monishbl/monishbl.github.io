@@ -1,105 +1,120 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirect | monish.bl</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#101010',
-                        secondary: '#BFB48F',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #101010;
-        }
-        .bg-grid {
-            background-size: 100px 100px;
-            background-image: linear-gradient(to right, #b7ab9810 1px, transparent 1px),
-                            linear-gradient(to bottom, #b7ab9810 1px, transparent 1px);
-            animation: move 5s linear infinite;
-        }
-        @keyframes move {
-            from { background-position: 0 0, 0 0; }
-            to { background-position: 100px 100px, 50px 50px; }
-        }
-        .progress-bar {
-            width: 0%;
-            animation: progress 1s ease-out forwards;
-        }
-        @keyframes progress {
-            to { width: 100%; }
-        }
-    </style>
-</head>
-<body class="min-h-screen bg-primary text-white">
-    <div class="fixed inset-0 flex items-center justify-center bg-primary overflow-hidden">
-        <div class="bg-grid absolute inset-0 z-0"></div>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Redirecting | monish.bl</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+		<script>
+			tailwind.config = {
+				theme: {
+					extend: {
+						colors: { primary: '#101010', secondary: '#BFB48F' }
+					}
+				}
+			};
+		</script>
+		<style>
+			.bg-grid {
+				background-size: 50px 50px;
+				background-image: linear-gradient(to right, #bfb48f10 1px, transparent 1px), linear-gradient(to bottom, #bfb48f10 1px, transparent 1px);
+				animation: moveGrid 20s linear infinite;
+			}
 
-        <div class="relative flex flex-col items-center gap-16 p-10 z-10">
-            <!-- Header -->
-            <div class="flex flex-col items-center gap-4">
-                <h1 class="text-4xl md:text-6xl font-bold flex items-center gap-4">
-                    Hello
-                    <span class="text-sm text-secondary/50 font-normal">EN</span>
-                </h1>
-                <span class="text-lg md:text-xl text-secondary uppercase tracking-wider">
-                    Redirecting...
-                </span>
-                <div class="w-56">
-                    <div class="h-[2px] bg-secondary progress-bar"></div>
-                </div>
-            </div>
+			@keyframes moveGrid {
+				0% {
+					transform: translate(0, 0);
+				}
+				100% {
+					transform: translate(-50px, -50px);
+				}
+			}
 
-            <!-- Content -->
-            <div class="flex flex-col items-center gap-8 text-center">
-                <div class="flex flex-col gap-4">
-                    <h2 class="text-2xl font-bold">
-                        This site has been <span class="text-secondary">moved</span>
-                    </h2>
-                    <p class="text-secondary/60">
-                        Visit my new portfolio to explore my latest projects
-                    </p>
-                </div>
+			.progress {
+				width: 0%;
+				animation: loading 5s linear forwards;
+			}
 
-                <a 
-                    href="https://portfolio.monishbl.tech" 
-                    class="px-6 py-3 rounded-full border border-secondary text-secondary hover:bg-secondary hover:text-primary transition-all duration-300"
-                >
-                    Visit New Portfolio
-                </a>
+			@keyframes loading {
+				0% {
+					width: 0%;
+				}
+				100% {
+					width: 100%;
+				}
+			}
 
-                <!-- Social Links -->
-                <div class="flex gap-6 text-secondary text-sm">
-                    <a href="https://github.com/monishbl" class="hover:text-white transition-colors">
-                        GitHub
-                    </a>
-                    <a href="https://www.linkedin.com/in/monish-b-l-4687b9251/" class="hover:text-white transition-colors">
-                        LinkedIn
-                    </a>
-                    <a href="mailto:monishbl159@gmail.com" class="hover:text-white transition-colors">
-                        Email
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+			.text-reveal {
+				animation: reveal 0.5s ease forwards;
+				opacity: 0;
+				transform: translateY(20px);
+			}
 
-    <script>
-        setTimeout(() => {
-            window.location.href = 'https://portfolio.monishbl.tech';
-        }, 5000);
-    </script>
-</body>
+			@keyframes reveal {
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+			.fadeout {
+				opacity: 1;
+				animation: fadeOut 0.3s ease-out 5.2s forwards;
+			}
+
+			@keyframes fadeOut {
+				to {
+					opacity: 0;
+				}
+			}
+
+			.slide-up {
+				animation: slideUp 0.5s ease forwards;
+				opacity: 0;
+				transform: translateY(20px);
+			}
+
+			@keyframes slideUp {
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+		</style>
+	</head>
+	<body class="bg-primary font-['Montserrat']">
+		<div class="fixed inset-0 flex items-center justify-center bg-primary overflow-hidden fadeout">
+			<!-- Background Grid -->
+			<div class="bg-grid absolute inset-0 opacity-50"></div>
+
+			<!-- Content -->
+			<div class="relative z-10 flex flex-col items-center gap-8 p-6 text-center">
+				<div class="flex flex-col items-center gap-2">
+					<h1 class="text-4xl group hover:text-secondary font-bold text-white text-reveal duration-300" style="animation-delay: 0.2s">monish<span class=" group-hover:text-white text-secondary duration-300">.</span>bl</h1>
+					<p class="text-secondary/60 text-sm slide-up" style="animation-delay: 0.3s">This site has moved to a new address</p>
+				</div>
+
+				<!-- Progress Container -->
+				<div class="flex flex-col slide-up items-center gap-4" style="animation-delay: 0.5s">
+					<span class="text-secondary uppercase tracking-widest text-sm text-reveal" style="animation-delay: 0.4s"> Redirecting: <a href="portfolio.monishbl.tech" class="hover:underline underline-offset-2">portfolio.monishbl.tech</a> </span>
+					<div class="w-48 h-[2px] bg-secondary/20 overflow-hidden">
+						<div class="h-full bg-secondary progress"></div>
+					</div>
+				</div>
+
+				<!-- Social Links -->
+				<!-- <div class="flex gap-6 text-secondary/60 text-sm text-reveal" style="animation-delay: 0.6s">
+					<a href="https://github.com/monishbl" target="_blank" class="hover:text-secondary transition-colors">GitHub</a>
+					<a href="https://www.linkedin.com/in/monish-b-l-4687b9251/" target="_blank" class="hover:text-secondary transition-colors">LinkedIn</a>
+					<a href="mailto:monishbl159@gmail.com" class="hover:text-secondary transition-colors">Email</a>
+				</div> -->
+			</div>
+		</div>
+
+		<script>
+			setTimeout(() => {
+				window.location.href = 'https://portfolio.monishbl.tech';
+			}, 5500);
+		</script>
+	</body>
 </html>
