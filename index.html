@@ -17,17 +17,20 @@
 		</script>
 		<style>
 			.bg-grid {
-				background-size: 50px 50px;
-				background-image: linear-gradient(to right, #bfb48f10 1px, transparent 1px), linear-gradient(to bottom, #bfb48f10 1px, transparent 1px);
-				animation: moveGrid 20s linear infinite;
+				background-size: 100px 100px;
+				background-image: linear-gradient(to right, #b7ab9810 1px, transparent 1px), linear-gradient(to bottom, #b7ab9810 1px, transparent 1px);
+				animation: move 5s linear infinite;
 			}
-
-			@keyframes moveGrid {
-				0% {
-					transform: translate(0, 0);
+			@keyframes move {
+				from {
+					background-position:
+						0 0,
+						0 0;
 				}
-				100% {
-					transform: translate(-50px, -50px);
+				to {
+					background-position:
+						100px 100px,
+						50px 50px;
 				}
 			}
 
@@ -117,6 +120,25 @@
 					transform: translateY(0);
 				}
 			}
+
+			.gradient-border {
+				background: linear-gradient(90deg, #bfb48f05, #bfb48f20, #bfb48f05);
+				border: 1px solid #bfb48f10;
+			}
+
+			.floating {
+				animation: float 6s ease-in-out infinite;
+			}
+
+			@keyframes float {
+				0%,
+				100% {
+					transform: translateY(0);
+				}
+				50% {
+					transform: translateY(-10px);
+				}
+			}
 		</style>
 	</head>
 	<body class="bg-primary font-['Montserrat']">
@@ -125,7 +147,7 @@
 			<div class="bg-grid absolute inset-0 opacity-50"></div>
 
 			<!-- Content -->
-			<div class="relative z-10 flex flex-col items-center gap-5 p-6 text-center">
+			<div class="relative z-10 flex flex-col items-center gap-8 p-6 text-center max-w-lg">
 				<!-- Header -->
 				<div class="flex flex-col items-center gap-2">
 					<h1 class="text-4xl group hover:text-secondary font-bold text-white text-reveal duration-300" style="animation-delay: 0.2s">
@@ -143,24 +165,29 @@
 				</div>
 
 				<!-- Progress Container -->
-				<div id="stateContainer" class="flex flex-col items-center gap-4 h-[80px] slide-up" style="animation-delay: 0.5s">
-					<!-- State Content -->
+				<div id="stateContainer" class="w-full gradient-border rounded-2xl p-6 slide-up backdrop-blur-sm" style="animation-delay: 0.5s">
 					<div id="contentWrapper" class="flex flex-col items-center gap-4 fade-slide">
 						<span class="text-secondary uppercase tracking-widest text-sm text-reveal" style="animation-delay: 0.4s"> Redirecting </span>
-						<div class="flex items-center gap-4">
-							<div class="w-48 h-[2px] bg-secondary/20 overflow-hidden">
-								<div class="h-full bg-secondary progress"></div>
+						<div class="flex items-center gap-4 w-full max-w-xs">
+							<div class="flex-1 h-[2px] bg-secondary/20 rounded-full overflow-hidden">
+								<div class="h-full bg-gradient-to-r from-secondary/50 to-secondary progress"></div>
 							</div>
-							<button id="cancelBtn" class="text-xs text-secondary/60 hover:text-secondary transition-colors" onclick="cancelRedirect()">Cancel</button>
+							<button
+								id="cancelBtn"
+								class="px-3 py-1 rounded-full text-xs border border-secondary/20 text-secondary/60 hover:bg-secondary/10 hover:text-secondary transition-all duration-300"
+								onclick="cancelRedirect()"
+							>
+								Cancel
+							</button>
 						</div>
 					</div>
 				</div>
 
-				<!-- Social Links
-				<div class="flex gap-6 text-secondary/60 text-sm text-reveal" style="animation-delay: 0.6s">
+				<!-- Social Links -->
+				<div class="flex gap-6 text-secondary/60 text-xs tracking-wider text-reveal" style="animation-delay: 0.6s">
 					<a href="https://github.com/monishbl" target="_blank" class="hover:text-secondary transition-colors"> GitHub </a>
 					<a href="https://www.linkedin.com/in/monish-b-l-4687b9251/" target="_blank" class="hover:text-secondary transition-colors"> LinkedIn </a>
-				</div> -->
+				</div>
 			</div>
 		</div>
 
@@ -174,7 +201,7 @@
 				const contentWrapper = document.getElementById('contentWrapper');
 				const newContent = `
             <a href="https://portfolio.monishbl.tech" 
-               class="group flex items-center gap-2 text-secondary tracking-widest text-sm underline underline-offset-4">
+               class="group flex items-center gap-0 text-secondary tracking-widest text-sm underline underline-offset-4">
                 portfolio.monishbl.tech
                 <svg xmlns="http://www.w3.org/2000/svg" 
                      class="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" 
