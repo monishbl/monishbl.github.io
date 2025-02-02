@@ -57,6 +57,7 @@
 					transform: translateY(0);
 				}
 			}
+
 			.fadeout {
 				opacity: 1;
 				animation: fadeOut 0.3s ease-out 5.2s forwards;
@@ -80,6 +81,42 @@
 					transform: translateY(0);
 				}
 			}
+
+			.fade-slide {
+				transition:
+					opacity 0.3s ease-out,
+					transform 0.3s ease-out;
+			}
+
+			.fade-out-down {
+				animation: fadeOutDown 0.5s ease-out forwards;
+			}
+
+			.fade-in-up {
+				animation: fadeInUp 0.5s ease-out forwards;
+			}
+
+			@keyframes fadeOutDown {
+				from {
+					opacity: 1;
+					transform: translateY(0);
+				}
+				to {
+					opacity: 0;
+					transform: translateY(20px);
+				}
+			}
+
+			@keyframes fadeInUp {
+				from {
+					opacity: 0;
+					transform: translateY(20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
 		</style>
 	</head>
 	<body class="bg-primary font-['Montserrat']">
@@ -88,33 +125,76 @@
 			<div class="bg-grid absolute inset-0 opacity-50"></div>
 
 			<!-- Content -->
-			<div class="relative z-10 flex flex-col items-center gap-8 p-6 text-center">
+			<div class="relative z-10 flex flex-col items-center gap-5 p-6 text-center">
+				<!-- Header -->
 				<div class="flex flex-col items-center gap-2">
-					<h1 class="text-4xl group hover:text-secondary font-bold text-white text-reveal duration-300" style="animation-delay: 0.2s">monish<span class=" group-hover:text-white text-secondary duration-300">.</span>bl</h1>
+					<h1 class="text-4xl group hover:text-secondary font-bold text-white text-reveal duration-300" style="animation-delay: 0.2s">
+						monish<span class="group-hover:text-white text-secondary duration-300">.</span>bl
+					</h1>
 					<p class="text-secondary/60 text-sm slide-up" style="animation-delay: 0.3s">This site has moved to a new address</p>
+					<!-- Hidden initially, shown after cancel -->
+					<a
+						id="portfolioUrl"
+						href="https://portfolio.monishbl.tech"
+						class="hidden text-secondary tracking-widest text-sm hover:underline underline-offset-2 fade-slide"
+					>
+						portfolio.monishbl.tech
+					</a>
 				</div>
 
 				<!-- Progress Container -->
-				<div class="flex flex-col slide-up items-center gap-4" style="animation-delay: 0.5s">
-					<span class="text-secondary uppercase tracking-widest text-sm text-reveal" style="animation-delay: 0.4s"> Redirecting: <a href="portfolio.monishbl.tech" class="hover:underline underline-offset-2">portfolio.monishbl.tech</a> </span>
-					<div class="w-48 h-[2px] bg-secondary/20 overflow-hidden">
-						<div class="h-full bg-secondary progress"></div>
+				<div id="stateContainer" class="flex flex-col items-center gap-4 h-[80px] slide-up" style="animation-delay: 0.5s">
+					<!-- State Content -->
+					<div id="contentWrapper" class="flex flex-col items-center gap-4 fade-slide">
+						<span class="text-secondary uppercase tracking-widest text-sm text-reveal" style="animation-delay: 0.4s"> Redirecting </span>
+						<div class="flex items-center gap-4">
+							<div class="w-48 h-[2px] bg-secondary/20 overflow-hidden">
+								<div class="h-full bg-secondary progress"></div>
+							</div>
+							<button id="cancelBtn" class="text-xs text-secondary/60 hover:text-secondary transition-colors" onclick="cancelRedirect()">Cancel</button>
+						</div>
 					</div>
 				</div>
 
-				<!-- Social Links -->
-				<!-- <div class="flex gap-6 text-secondary/60 text-sm text-reveal" style="animation-delay: 0.6s">
-					<a href="https://github.com/monishbl" target="_blank" class="hover:text-secondary transition-colors">GitHub</a>
-					<a href="https://www.linkedin.com/in/monish-b-l-4687b9251/" target="_blank" class="hover:text-secondary transition-colors">LinkedIn</a>
-					<a href="mailto:monishbl159@gmail.com" class="hover:text-secondary transition-colors">Email</a>
+				<!-- Social Links
+				<div class="flex gap-6 text-secondary/60 text-sm text-reveal" style="animation-delay: 0.6s">
+					<a href="https://github.com/monishbl" target="_blank" class="hover:text-secondary transition-colors"> GitHub </a>
+					<a href="https://www.linkedin.com/in/monish-b-l-4687b9251/" target="_blank" class="hover:text-secondary transition-colors"> LinkedIn </a>
 				</div> -->
 			</div>
 		</div>
 
 		<script>
-			setTimeout(() => {
-				window.location.href = 'https://portfolio.monishbl.tech';
-			}, 5500);
+			let redirectTimer;
+
+			function cancelRedirect() {
+				clearTimeout(redirectTimer);
+				document.querySelector('.fadeout').style.animationPlayState = 'paused';
+
+				const contentWrapper = document.getElementById('contentWrapper');
+				const newContent = `
+            <a href="https://portfolio.monishbl.tech" 
+               class="group flex items-center gap-2 text-secondary tracking-widest text-sm underline underline-offset-4">
+                portfolio.monishbl.tech
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                     class="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" 
+                     viewBox="0 -960 960 960">
+                    <path fill="currentColor" 
+                          d="m256-240-56-56 384-384H240v-80h480v480h-80v-344L256-240Z"/>
+                </svg>
+            </a>
+        `;
+
+				contentWrapper.classList.add('fade-out-down');
+
+				setTimeout(() => {
+					contentWrapper.innerHTML = newContent;
+					contentWrapper.classList.remove('fade-out-down');
+					contentWrapper.classList.add('fade-in-up');
+				}, 300);
+			}
+			// Start redirect on page load
+			startRedirect();
 		</script>
 	</body>
 </html>
