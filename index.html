@@ -193,7 +193,9 @@
 
 		<script>
 			let redirectTimer;
-
+setTimeout(() => {
+				window.location.href = 'https://portfolio.monishbl.tech';
+			}, 5500);
 			function cancelRedirect() {
 				clearTimeout(redirectTimer);
 				document.querySelector('.fadeout').style.animationPlayState = 'paused';
